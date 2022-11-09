@@ -1,8 +1,9 @@
-package hr.tvz.diplomski.webshop_ntpws.service;
+package hr.tvz.diplomski.webshop_ntpws.service.impl;
 
 import hr.tvz.diplomski.webshop_ntpws.domain.Category;
 import hr.tvz.diplomski.webshop_ntpws.dto.CategoryDto;
 import hr.tvz.diplomski.webshop_ntpws.repository.CategoryRepository;
+import hr.tvz.diplomski.webshop_ntpws.service.CategoryService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.stereotype.Service;

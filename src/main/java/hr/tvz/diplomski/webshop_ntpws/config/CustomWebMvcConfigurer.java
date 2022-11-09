@@ -1,15 +1,25 @@
 package hr.tvz.diplomski.webshop_ntpws.config;
 
 import hr.tvz.diplomski.webshop_ntpws.converter.CategoryToCategoryDtoConverter;
+import hr.tvz.diplomski.webshop_ntpws.converter.UserToUserDtoConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.Resource;
+
 @Configuration
 public class CustomWebMvcConfigurer implements WebMvcConfigurer {
 
+    @Resource
+    private CategoryToCategoryDtoConverter categoryToCategoryDtoConverter;
+
+    @Resource
+    private UserToUserDtoConverter userToUserDtoConverter;
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new CategoryToCategoryDtoConverter());
+        registry.addConverter(categoryToCategoryDtoConverter);
+        registry.addConverter(userToUserDtoConverter);
     }
 }

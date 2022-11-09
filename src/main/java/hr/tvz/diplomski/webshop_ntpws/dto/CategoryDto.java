@@ -1,6 +1,5 @@
 package hr.tvz.diplomski.webshop_ntpws.dto;
 
-import hr.tvz.diplomski.webshop_ntpws.domain.Category;
 import lombok.Data;
 
 import java.util.Date;
