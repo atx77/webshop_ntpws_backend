@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerNewCustomer(String email, String password, String firstName, String lastName) {
+        if (userRepository.findByEmailEquals(email).isPresent()) {
+            throw new IllegalArgumentException("User already exists!");
+        }
         User user = new User();
         user.setEmail(email);
         user.setFirstName(firstName);
