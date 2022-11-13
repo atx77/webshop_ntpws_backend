@@ -7,6 +7,5 @@ public interface UserService {
     UserDto getLoggedUser();
     void registerNewCustomer(String email, String password, String firstName, String lastName);
     void updateUserPersonalInformation(String firstName, String lastName, String password);
-
     User getLoggedUserModel();
 }
