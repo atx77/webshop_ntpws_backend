@@ -1,10 +1,13 @@
 package hr.tvz.diplomski.webshop_ntpws.service.impl;
 
+import hr.tvz.diplomski.webshop_ntpws.domain.Cart;
 import hr.tvz.diplomski.webshop_ntpws.domain.User;
 import hr.tvz.diplomski.webshop_ntpws.dto.UserDto;
 import hr.tvz.diplomski.webshop_ntpws.enumeration.UserType;
+import hr.tvz.diplomski.webshop_ntpws.repository.CartRepository;
 import hr.tvz.diplomski.webshop_ntpws.repository.UserRepository;
 import hr.tvz.diplomski.webshop_ntpws.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private ConversionService conversionService;
+
+    @Resource
+    private CartRepository cartRepository;
 
     @Override
     public UserDto getLoggedUser() {
@@ -39,8 +46,12 @@ public class UserServiceImpl implements UserService {
         user.setLastName(lastName);
         user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(10)));
         user.setType(UserType.CUSTOMER);
-
         userRepository.save(user);
+
+        Cart cart = new Cart();
+        cart.setCreationDate(new Date());
+        cart.setUser(user);
+        cartRepository.save(cart);
     }
 
     private String getLoggedUserUsername() {
@@ -49,5 +60,25 @@ public class UserServiceImpl implements UserService {
             return ((UserDetails)authentication.getPrincipal()).getUsername();
         }
         return null;
+    }
+
+    @Override
+    public void updateUserPersonalInformation(String firstName, String lastName, String password) {
+        User user = getLoggedUserModel();
+        if (StringUtils.isNotBlank(firstName)) {
+            user.setFirstName(firstName);
+        }
+        if (StringUtils.isNotBlank(lastName)) {
+            user.setLastName(lastName);
+        }
+        if (StringUtils.isNotBlank(password)) {
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(10)));
+        }
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getLoggedUserModel() {
+        return userRepository.findByEmailEquals(getLoggedUserUsername()).orElse(null);
     }
 }

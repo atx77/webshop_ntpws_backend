@@ -50,6 +50,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Optional<Product> getModelForId(Long productId) {
+        return productRepository.findById(productId);
+    }
+
+    @Override
     public List<ProductDto> getAllProductsInCategoryAndFilter(Long categoryId, List<String> brandNames,
                                                               BigDecimal minPrice, BigDecimal maxPrice,
                                                               boolean isOnSale, SortType sortType) {

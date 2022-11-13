@@ -1,30 +1,22 @@
 package hr.tvz.diplomski.webshop_ntpws.config;
 
-import hr.tvz.diplomski.webshop_ntpws.converter.CategoryToCategoryDtoConverter;
-import hr.tvz.diplomski.webshop_ntpws.converter.ProductToProductDtoConverter;
-import hr.tvz.diplomski.webshop_ntpws.converter.UserToUserDtoConverter;
+import hr.tvz.diplomski.webshop_ntpws.converter.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
-
 @Configuration
 public class CustomWebMvcConfigurer implements WebMvcConfigurer {
 
-    @Resource
-    private CategoryToCategoryDtoConverter categoryToCategoryDtoConverter;
-
-    @Resource
-    private UserToUserDtoConverter userToUserDtoConverter;
-
-    @Resource
-    private ProductToProductDtoConverter productToProductDtoConverter;
-
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(categoryToCategoryDtoConverter);
-        registry.addConverter(userToUserDtoConverter);
-        registry.addConverter(productToProductDtoConverter);
+        registry.addConverter(new CategoryToCategoryDtoConverter());
+        registry.addConverter(new UserToUserDtoConverter());
+        registry.addConverter(new ProductToProductDtoConverter());
+        registry.addConverter(new CartItemToCartItemDtoConverter());
+        registry.addConverter(new CartToCartDtoConverter());
+        registry.addConverter(new AddressToAddressDtoConverter());
+        registry.addConverter(new OrderItemToOrderItemDtoConverter());
+        registry.addConverter(new OrderToOrderDtoConverter());
     }
 }
