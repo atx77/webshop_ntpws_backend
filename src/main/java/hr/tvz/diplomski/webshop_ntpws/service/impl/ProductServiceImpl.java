@@ -96,4 +96,11 @@ public class ProductServiceImpl implements ProductService {
                 TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Product.class)),
                 TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(ProductDto.class)));
     }
+
+    @Override
+    public List<ProductDto> findNewestProducts() {
+        return (List<ProductDto>) conversionService.convert(productRepository.findTop5ByActiveIsTrueOrderByCreationDateDesc(),
+                TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Product.class)),
+                TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(ProductDto.class)));
+    }
 }

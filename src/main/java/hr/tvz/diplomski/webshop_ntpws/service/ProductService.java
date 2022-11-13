@@ -18,4 +18,6 @@ public interface ProductService {
                                                  BigDecimal maxPrice, boolean isOnSale, SortType sortType);
 
     ProductDto getForId(Long productId);
+
+    List<ProductDto> findNewestProducts();
 }
